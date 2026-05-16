@@ -1,0 +1,16 @@
+== Label Template [777~8~]
+
+*Transmitter:* PC or Device +
+*Receiver:* Device or PC +
+*Description:* Example template for the labels
+
+[cols="32*^", options="header,autowidth"]
+|===
+|31 |30 |29 |28 |27 |26 |25 |24 |23 |22 |21 |20 |19 |18 |17 |16 |15 |14 |13 |12 |11 |10 |9 |8 |7 |6 |5 |4 |3 |2 |1 |0
+
+1+|Parity Bit
+2+|SSM
+19+|Reserved
+2+|SDI
+8+|777~8~
+|===

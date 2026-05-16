@@ -1,0 +1,68 @@
+= Project Description
+:toc: left
+:toclevels: 3
+:sectnums:
+
+== Overview
+
+**TODO**
+
+* Add overview of the project
+** Simply playground with ARINC 429-ish communications
+
+=== PC Application Description
+
+* Describe the PC application and its purpose
+
+=== Device Application
+
+* Describe the embedded device application and its purpose
+** Targets multiple boards
+*** Arduino UNO
+*** STM32 BluePill
+*** RaspberryPi Pico 2W
+** 4-bit IO port
+*** Leave a section discussing the pinout per board
+** Multi-channel ADCs 
+*** Board determines how many
+*** Board determines voltage reference
+** LCD Screen
+*** Only supported for Arduino UNO since it is 5V compliant
+
+=== Device PC Emulator
+
+* Describe the embedded device PC emulator and its purpose
+** This application will use UDP sockets instead of serial ports to commuincate
+
+=== ARINC 429 Overview
+
+
+== ARINC 429 Labels
+The following sections describe the ARINC 429 labels communicated between the PC application
+and device applications.
+Unless otherwise specified the SDI field of the label is not used.
+Unless otherwise specified the SSM field of the label has the following interpretation:
+
+[cols="3*^", options="header,autowidth"]
+|===
+|SSM1 [Bit 30] |SSM0 [Bit 29] |Meaning
+|0             |0             |Normal Operation (NO)
+|0             |1             |No Computed Data (NCD)
+|1             |0             |Functional Test (FT)
+|1             |1             |Failure Warning (FW)
+|===
+
+
+[.landscape]
+:leveloffset: +1
+<<<
+include::labels/label-0template.adoc[]
+
+<<<
+include::labels/label-0300.adoc[]
+
+<<<
+include::labels/label-0327.adoc[]
+
+:leveloffset: -1
+[.portrait]
