@@ -49,6 +49,35 @@
         "CMAKE_C_FLAGS_RELEASE": "-Os",
         "CMAKE_CXX_FLAGS_RELEASE": "-Os"
       }
+    },
+    {
+      "name": "stm-bluepill-base",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/cmake/toolchains/stm-bluepill-toolchain.cmake",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+      }
+    },
+    {
+      "name": "stm-bluepill-debug",
+      "inherits": "stm-bluepill-base",
+      "binaryDir": "${sourceDir}/build/stm-bluepill-debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_C_FLAGS_DEBUG": "-g -Og",
+        "CMAKE_CXX_FLAGS_DEBUG": "-g -Og",
+        "CMAKE_ASM_FLAGS_DEBUG": "-g"
+      }
+    },
+    {
+      "name": "stm-bluepill-release",
+      "inherits": "stm-bluepill-base",
+      "binaryDir": "${sourceDir}/build/stm-bluepill-release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_C_FLAGS_RELEASE": "-Os",
+        "CMAKE_CXX_FLAGS_RELEASE": "-Os"
+      }
     }
   ],
   "buildPresets": [
@@ -70,6 +99,16 @@
     {
       "name": "uno-release",
       "configurePreset": "uno-release",
+      "jobs": 0
+    },
+    {
+      "name": "stm-bluepill-debug",
+      "configurePreset": "stm-bluepill-debug",
+      "jobs": 0
+    },
+    {
+      "name": "stm-bluepill-release",
+      "configurePreset": "stm-bluepill-release",
       "jobs": 0
     }
   ],

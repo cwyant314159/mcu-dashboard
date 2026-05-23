@@ -1,0 +1,5 @@
+add_library(startup STATIC)
+target_sources(startup PRIVATE src/crt0.c src/vectors.c)
+target_include_directories(startup PRIVATE include)
+target_link_libraries(startup PRIVATE cmsis-device-f1)
+target_link_options(startup PUBLIC -T${CMAKE_CURRENT_LIST_DIR}/STM32F103C8TX_FLASH.ld)
