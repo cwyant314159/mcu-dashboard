@@ -1,0 +1,98 @@
+{
+  "version": 3,
+  "configurePresets": [
+    {
+      "name": "debug",
+      "binaryDir": "${sourceDir}/build/debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "CMAKE_C_FLAGS_DEBUG": "-O0 -g",
+        "CMAKE_CXX_FLAGS_DEBUG": "-O0 -g"
+      }
+    },
+    {
+      "name": "release",
+      "binaryDir": "${sourceDir}/build/release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "CMAKE_C_FLAGS_RELEASE": "-O3",
+        "CMAKE_CXX_FLAGS_RELEASE": "-O3"
+      }
+    },
+    {
+      "name": "uno-base",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/cmake/toolchains/arduino-uno-toolchain.cmake",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+      }
+    },
+    {
+      "name": "uno-debug",
+      "inherits": "uno-base",
+      "binaryDir": "${sourceDir}/build/uno-debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_C_FLAGS_DEBUG": "-g -Og",
+        "CMAKE_CXX_FLAGS_DEBUG": "-g -Og",
+        "CMAKE_ASM_FLAGS_DEBUG": "-g"
+      }
+    },
+    {
+      "name": "uno-release",
+      "inherits": "uno-base",
+      "binaryDir": "${sourceDir}/build/uno-release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_C_FLAGS_RELEASE": "-Os",
+        "CMAKE_CXX_FLAGS_RELEASE": "-Os"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "debug",
+      "configurePreset": "debug",
+      "jobs": 0
+    },
+    {
+      "name": "release",
+      "configurePreset": "release",
+      "jobs": 0
+    },
+    {
+      "name": "uno-debug",
+      "configurePreset": "uno-debug",
+      "jobs": 0
+    },
+    {
+      "name": "uno-release",
+      "configurePreset": "uno-release",
+      "jobs": 0
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "debug",
+      "configurePreset": "debug",
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "jobs": 0
+      }
+    },
+    {
+      "name": "release",
+      "configurePreset": "release",
+      "output": {
+        "outputOnFailure": true
+      },
+      "execution": {
+        "jobs": 0
+      }
+    }
+  ]
+}
