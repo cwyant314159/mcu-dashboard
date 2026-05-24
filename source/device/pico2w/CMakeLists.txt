@@ -1,3 +1,1 @@
-if (CMAKE_CROSSCOMPILING)
-    add_subdirectory(apps)
-endif()
+add_subdirectory(apps)
