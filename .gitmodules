@@ -4,3 +4,6 @@
 [submodule "deps/cmsis-device-f1"]
 	path = deps/cmsis-device-f1
 	url = https://github.com/STMicroelectronics/cmsis-device-f1.git
+[submodule "deps/pico-sdk"]
+	path = deps/pico-sdk
+	url = https://github.com/raspberrypi/pico-sdk.git

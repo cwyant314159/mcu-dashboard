@@ -2,136 +2,97 @@
   "version": 3,
   "configurePresets": [
     {
-      "name": "debug",
-      "binaryDir": "${sourceDir}/build/debug",
+      "name": "global-base",
+      "hidden": true,
+      "binaryDir": "${sourceDir}/build/${presetName}",
       "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug",
-        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
-        "CMAKE_C_FLAGS_DEBUG": "-O0 -g",
-        "CMAKE_CXX_FLAGS_DEBUG": "-O0 -g"
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
       }
     },
     {
-      "name": "release",
-      "binaryDir": "${sourceDir}/build/release",
+      "name": "type-debug",
+      "hidden": true,
       "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release",
-        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
-        "CMAKE_C_FLAGS_RELEASE": "-O3",
-        "CMAKE_CXX_FLAGS_RELEASE": "-O3"
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_C_FLAGS_DEBUG": "-g -Og",
+        "CMAKE_CXX_FLAGS_DEBUG": "-g -Og",
+        "CMAKE_ASM_FLAGS_DEBUG": "-g"
       }
     },
+    {
+      "name": "type-release",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_C_FLAGS_RELEASE": "-Os",
+        "CMAKE_CXX_FLAGS_RELEASE": "-Os",
+        "CMAKE_ASM_FLAGS_RELEASE": "-Os"
+      }
+    },
+    {"name": "debug",   "inherits": [ "global-base", "type-debug" ]},
+    {"name": "release", "inherits": [ "global-base", "type-release" ]},
+    
     {
       "name": "uno-base",
       "hidden": true,
+      "inherits": "global-base",
       "cacheVariables": {
-        "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/cmake/toolchains/arduino-uno-toolchain.cmake",
-        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+        "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/cmake/toolchains/arduino-uno-toolchain.cmake"
       }
     },
-    {
-      "name": "uno-debug",
-      "inherits": "uno-base",
-      "binaryDir": "${sourceDir}/build/uno-debug",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug",
-        "CMAKE_C_FLAGS_DEBUG": "-g -Og",
-        "CMAKE_CXX_FLAGS_DEBUG": "-g -Og",
-        "CMAKE_ASM_FLAGS_DEBUG": "-g"
-      }
-    },
-    {
-      "name": "uno-release",
-      "inherits": "uno-base",
-      "binaryDir": "${sourceDir}/build/uno-release",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release",
-        "CMAKE_C_FLAGS_RELEASE": "-Os",
-        "CMAKE_CXX_FLAGS_RELEASE": "-Os"
-      }
-    },
+    {"name": "uno-debug",   "inherits": [ "uno-base", "type-debug" ]},
+    {"name": "uno-release", "inherits": [ "uno-base", "type-release" ]},
+
     {
       "name": "stm-bluepill-base",
       "hidden": true,
+      "inherits": "global-base",
       "cacheVariables": {
-        "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/cmake/toolchains/stm-bluepill-toolchain.cmake",
-        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+        "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/cmake/toolchains/stm-bluepill-toolchain.cmake"
       }
     },
+    {"name": "stm-bluepill-debug",   "inherits": [ "stm-bluepill-base", "type-debug" ]},
+    {"name": "stm-bluepill-release", "inherits": [ "stm-bluepill-base", "type-release" ]},
+
     {
-      "name": "stm-bluepill-debug",
-      "inherits": "stm-bluepill-base",
-      "binaryDir": "${sourceDir}/build/stm-bluepill-debug",
+      "name": "rpi-pico2w-base",
+      "hidden": true,
+      "inherits": "global-base",
       "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug",
-        "CMAKE_C_FLAGS_DEBUG": "-g -Og",
-        "CMAKE_CXX_FLAGS_DEBUG": "-g -Og",
-        "CMAKE_ASM_FLAGS_DEBUG": "-g"
+        "BOARD_NAME": "pico2_w",
+        "PICO_BOARD": "pico2_w",
+        "PICO_PLATFORM": "rp2350"
+      },
+      "environment": {
+        "PICO_SDK_PATH": "${sourceDir}/deps/pico-sdk"
       }
     },
-    {
-      "name": "stm-bluepill-release",
-      "inherits": "stm-bluepill-base",
-      "binaryDir": "${sourceDir}/build/stm-bluepill-release",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release",
-        "CMAKE_C_FLAGS_RELEASE": "-Os",
-        "CMAKE_CXX_FLAGS_RELEASE": "-Os"
-      }
-    }
+    {"name": "rpi-pico2w-debug",   "inherits": [ "rpi-pico2w-base", "type-debug" ]},
+    {"name": "rpi-pico2w-release", "inherits": [ "rpi-pico2w-base", "type-release" ]}
   ],
   "buildPresets": [
     {
-      "name": "debug",
-      "configurePreset": "debug",
+      "name": "build-base",
+      "hidden": true,
       "jobs": 0
     },
-    {
-      "name": "release",
-      "configurePreset": "release",
-      "jobs": 0
-    },
-    {
-      "name": "uno-debug",
-      "configurePreset": "uno-debug",
-      "jobs": 0
-    },
-    {
-      "name": "uno-release",
-      "configurePreset": "uno-release",
-      "jobs": 0
-    },
-    {
-      "name": "stm-bluepill-debug",
-      "configurePreset": "stm-bluepill-debug",
-      "jobs": 0
-    },
-    {
-      "name": "stm-bluepill-release",
-      "configurePreset": "stm-bluepill-release",
-      "jobs": 0
-    }
+    { "name": "debug",                "inherits": "build-base", "configurePreset": "debug" },
+    { "name": "release",              "inherits": "build-base", "configurePreset": "release" },
+    { "name": "uno-debug",            "inherits": "build-base", "configurePreset": "uno-debug" },
+    { "name": "uno-release",          "inherits": "build-base", "configurePreset": "uno-release" },
+    { "name": "stm-bluepill-debug",   "inherits": "build-base", "configurePreset": "stm-bluepill-debug" },
+    { "name": "stm-bluepill-release", "inherits": "build-base", "configurePreset": "stm-bluepill-release" },
+    { "name": "rpi-pico2w-debug",     "inherits": "build-base", "configurePreset": "rpi-pico2w-debug" },
+    { "name": "rpi-pico2w-release",   "inherits": "build-base", "configurePreset": "rpi-pico2w-release" }
   ],
   "testPresets": [
     {
-      "name": "debug",
-      "configurePreset": "debug",
-      "output": {
-        "outputOnFailure": true
-      },
-      "execution": {
-        "jobs": 0
-      }
+      "name": "test-base",
+      "hidden": true,
+      "output": { "outputOnFailure": true },
+      "execution": { "jobs": 0 }
     },
-    {
-      "name": "release",
-      "configurePreset": "release",
-      "output": {
-        "outputOnFailure": true
-      },
-      "execution": {
-        "jobs": 0
-      }
-    }
+    { "name": "debug",   "inherits": "test-base", "configurePreset": "debug" },
+    { "name": "release", "inherits": "test-base", "configurePreset": "release" }
   ]
 }
